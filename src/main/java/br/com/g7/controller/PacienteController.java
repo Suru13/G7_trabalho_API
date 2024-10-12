@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.g7.entity.Consulta;
 import br.com.g7.entity.Paciente;
 import br.com.g7.repository.PacienteRepository;
 import jakarta.validation.Valid;
@@ -26,30 +27,24 @@ public class PacienteController {
 	
 	@Autowired
 	private PacienteRepository repository;
-
-	@PostMapping
+	
+	@PostMapping("/cadastrar")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Paciente inserir(@Valid @RequestBody Paciente paciente) {
 		return repository.save(paciente);
 	}
 
 	@PutMapping("{codigo}")
-	public ResponseEntity<Paciente> alterarManutencao(@PathVariable Long codigo, @Valid @RequestBody Paciente paciente) {
+	public ResponseEntity<Paciente> atualizarPaciente(@PathVariable Long codigo, @Valid @RequestBody Paciente paciente) {
 		if (repository.existsById(codigo)) {
-			paciente.setCodigo(codigo); // aqui ele vai fazer o put se não ele iria criar outro novo
+			paciente.setCodigo(codigo);
 			return ResponseEntity.ok(repository.save(paciente));
 		}
 		return ResponseEntity.notFound().build();
 	}
 
-	@PostMapping("/varios")
-	@ResponseStatus(HttpStatus.CREATED)
-	public List<Paciente> inserirVarios(@RequestBody List<Paciente> pacientes) {
-		return repository.saveAll(pacientes);
-	}
-
 	@GetMapping
-	public List<Paciente> listar() {
+	public List<Paciente> listarPaciente() {
 		return repository.findAll();
 	}
 
