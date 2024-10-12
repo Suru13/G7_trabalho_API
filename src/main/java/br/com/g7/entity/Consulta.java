@@ -3,9 +3,12 @@ package br.com.g7.entity;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.g7.enums.Status;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,12 +25,13 @@ public class Consulta {
 	
 	private LocalDate dataConsulta;
 	private LocalTime horaConsulta;
+	
+	@Enumerated(EnumType.STRING)
 	private Status status;
 	
 	
-	
 	@PrePersist
-	protected void onCreate() {
+	private void onCreate() {
 		this.dataConsulta = LocalDate.now();
 		this.horaConsulta = LocalTime.now();
 	}
@@ -35,10 +39,12 @@ public class Consulta {
 
 	@ManyToOne
 	@JoinColumn(name = "paciente_codigo")
+	@JsonIgnore
 	private Paciente paciente;
 	
 	@ManyToOne
 	@JoinColumn(name = "medico_codigo")
+	@JsonIgnore
 	private Medico medico;
 
 
@@ -58,17 +64,7 @@ public class Consulta {
 	public void setDataConsulta(LocalDate dataConsulta) {
 		this.dataConsulta = dataConsulta;
 	}
-
-	public Consulta(Long codigo, LocalDate dataConsulta, LocalTime horaConsulta, Status status, Paciente paciente,
-			Medico medico) {
-		super();
-		this.codigo = codigo;
-		this.dataConsulta = dataConsulta;
-		this.horaConsulta = horaConsulta;
-		this.status = status;
-		this.paciente = paciente;
-		this.medico = medico;
-	}
+	
 
 	public LocalTime getHoraConsulta() {
 		return horaConsulta;

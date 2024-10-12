@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.g7.entity.Consulta;
 import br.com.g7.entity.Paciente;
 import br.com.g7.repository.PacienteRepository;
 import jakarta.validation.Valid;
@@ -28,7 +27,7 @@ public class PacienteController {
 	@Autowired
 	private PacienteRepository repository;
 	
-	@PostMapping("/cadastrar")
+	@PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
 	public Paciente inserir(@Valid @RequestBody Paciente paciente) {
 		return repository.save(paciente);
@@ -44,7 +43,7 @@ public class PacienteController {
 	}
 
 	@GetMapping
-	public List<Paciente> listarPaciente() {
+	public List<Paciente> listarPacientes() {
 		return repository.findAll();
 	}
 

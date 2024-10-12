@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.g7.entity.Medico;
-import br.com.g7.entity.Paciente;
 import br.com.g7.repository.MedicoRepository;
 import jakarta.validation.Valid;
 
